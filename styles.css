@@ -373,7 +373,7 @@ em { font-style: italic; color: var(--pink); font-family: var(--f-display); font
 /* GALLERY CAROUSEL */
 .gallery { padding: 110px 0; background: var(--plum-2); }
 .carousel { position: relative; margin-top: 28px; }
-.carousel__track { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 16px; padding: 4px 28px 24px; scrollbar-width: thin; }
+.carousel__track { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 16px; padding: 4px 28px 24px; scrollbar-width: thin; justify-content: center; }
 .carousel__track::-webkit-scrollbar { height: 8px; }
 .carousel__track::-webkit-scrollbar-thumb { background: var(--pink); border-radius: 4px; }
 .carousel__slide { flex: 0 0 calc(50% - 8px); scroll-snap-align: start; border-radius: var(--radius-lg); overflow: hidden; background: var(--plum); margin: 0; position: relative; aspect-ratio: 16/10; }
