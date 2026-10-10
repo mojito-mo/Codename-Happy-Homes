@@ -13,6 +13,39 @@
     AUTO_POPUP_REPEAT_MS: 45000
   };
 
+  // Zoho CRM Web-to-Lead (Happy Homes web form, tagged "Happy Homes" in Zoho
+  // so every lead from this site is auto-segregated from Oasis / other projects)
+  const ZOHO_WEBFORM = {
+    ENDPOINT: 'https://crm.zoho.in/crm/WebToLeadForm',
+    xnQsjsdp: '1b62886e90b98a8333a79b7d4a6783b92d4ee2686a96349b75f8d77f3b3d3eed',
+    xmIwtLD: '4180cfcd993ae458e5a0059f5eed3d42dea59da7ceba1cfd7cc998133e98e03cfbbf1ae3c2ad229987d64070ada354a7',
+    actionType: 'TGVhZHM=',
+    returnURL: 'https://codenamehappyhomes.net/thank-you.html'
+  };
+
+  // Detect whether this visit came from Google Ads, Meta Ads, WhatsApp, or
+  // plain/organic website traffic, and remember it for the whole session so
+  // the Zoho "Enquiry Source" field segregates leads by channel, not just by
+  // "Website Lead" for everything.
+  function detectLeadSource() {
+    try {
+      const cached = sessionStorage.getItem('chh_lead_source');
+      if (cached) return cached;
+      const params = new URLSearchParams(location.search);
+      const gclid = params.get('gclid') || '';
+      const fbclid = params.get('fbclid') || '';
+      const utmSource = (params.get('utm_source') || '').toLowerCase();
+      let src = 'Website Lead';
+      if (gclid || utmSource.indexOf('google') > -1) src = 'Google Ads';
+      else if (fbclid || /facebook|meta|instagram|^ig$/.test(utmSource)) src = 'Meta Ads';
+      else if (utmSource.indexOf('whatsapp') > -1) src = 'WhatsApp';
+      sessionStorage.setItem('chh_lead_source', src);
+      sessionStorage.setItem('chh_gclid', gclid);
+      return src;
+    } catch (_) { return 'Website Lead'; }
+  }
+  detectLeadSource();
+
   const $  = (s, c = document) => c.querySelector(s);
   const $$ = (s, c = document) => Array.from(c.querySelectorAll(s));
   const prm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -186,6 +219,44 @@
       }
     } catch (_) {}
   }
+  // Push every lead into Zoho CRM (Leads module, tagged "Happy Homes"),
+  // in parallel with the existing Netlify Forms + Google Sheet capture.
+  async function submitToZoho(payload) {
+    try {
+      const leadSource = detectLeadSource();
+      let gclid = '';
+      try { gclid = sessionStorage.getItem('chh_gclid') || ''; } catch (_) {}
+
+      const descLines = [];
+      if (payload.config)   descLines.push('Configuration: ' + payload.config);
+      if (payload.budget)   descLines.push('Budget: ' + payload.budget);
+      if (payload.timeline) descLines.push('Timeline: ' + payload.timeline);
+      if (payload.pickup)   descLines.push('Pickup: ' + payload.pickup);
+      if (payload.date)     descLines.push('Preferred date: ' + payload.date);
+      if (payload.slot)     descLines.push('Preferred slot: ' + payload.slot);
+      if (payload.message)  descLines.push('Message: ' + payload.message);
+      descLines.push('Form: ' + (payload.source || ''));
+      descLines.push('Page: ' + (payload.page || ''));
+
+      const body = new URLSearchParams();
+      body.append('xnQsjsdp', ZOHO_WEBFORM.xnQsjsdp);
+      body.append('zc_gad', gclid);
+      body.append('xmIwtLD', ZOHO_WEBFORM.xmIwtLD);
+      body.append('actionType', ZOHO_WEBFORM.actionType);
+      body.append('returnURL', ZOHO_WEBFORM.returnURL);
+      body.append('Last Name', payload.name || 'Website Visitor');
+      body.append('Phone', payload.phone || '');
+      body.append('Email', payload.email || '');
+      body.append('Lead Source', leadSource);
+      body.append('LEADCF2', 'Apartment');
+      body.append('Description', descLines.join('\n'));
+
+      await fetch(ZOHO_WEBFORM.ENDPOINT, {
+        method: 'POST', mode: 'no-cors', body: body, keepalive: true
+      });
+    } catch (err) { console.warn('Zoho CRM POST failed:', err); }
+  }
+
   function buildWA(payload, hint) {
     const lines = ['Hi, I am interested in Happy Homes, Trisulia.', ''];
     if (payload.name)     lines.push('*Name:* ' + payload.name);
@@ -275,6 +346,7 @@
 
       // 1) Keep the existing capture: Netlify Forms + Google Sheet + Ads
       await submitLead(p, netlifyName);
+      submitToZoho(p);
 
       // 2) Build the WhatsApp hand-off link for the thank-you page
       const hint = source === 'Site Visit form' ? 'Please confirm my free site visit pickup.' :
