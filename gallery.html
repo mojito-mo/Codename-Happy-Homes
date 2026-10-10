@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#062c24" />
+  <title>Gallery | Happy Homes, Trisulia, Cuttack</title>
+  <meta name="description" content="Photos and video walkthroughs of Happy Homes at Trisulia, Cuttack: elevation, drone views, master plan and unit interiors." />
+  <meta name="robots" content="index, follow" />
+  <link rel="icon" type="image/svg+xml" href="assets/logo-mark.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600;1,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-N7LTN3LF');</script>
+  <!-- End Google Tag Manager -->
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WT3VBQJMH0"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-WT3VBQJMH0', { page_path: '/gallery' });
+  </script>
+
+  <style>
+    :root{
+      --aubergine:#062c24; --plum:#0d4a3a; --plum-2:#082e23;
+      --gold:#e6c14a; --gold-2:#f2d36a; --cream:#faf3eb;
+      --wa:#25d366; --wa-2:#1ebe5b;
+      --f-display:'Cormorant Garamond',Georgia,serif;
+      --f-body:'Inter',system-ui,-apple-system,sans-serif;
+      --ease:cubic-bezier(.22,1,.36,1);
+    }
+    *,*::before,*::after{box-sizing:border-box;}
+    html,body{height:100%;}
+    body{
+      margin:0; font-family:var(--f-body); color:var(--cream);
+      background:var(--aubergine);
+      min-height:100vh; padding:24px; position:relative;
+      -webkit-font-smoothing:antialiased;
+    }
+    #aurora{position:fixed; inset:0; width:100%; height:100%; z-index:0; display:block;}
+    .glow-fallback{position:fixed; inset:0; z-index:0;
+      background:
+        radial-gradient(60% 55% at 50% 0%, rgba(230,193,74,.18), transparent 60%),
+        radial-gradient(50% 50% at 85% 90%, rgba(13,74,58,.9), transparent 60%),
+        radial-gradient(40% 40% at 10% 100%, rgba(230,193,74,.10), transparent 60%),
+        linear-gradient(180deg,#083127,#062c24);
+    }
+    .topbar{position:relative; z-index:2; display:flex; align-items:center; justify-content:space-between; max-width:1120px; margin:0 auto 28px; padding:4px 2px;}
+    .brand{display:inline-flex; align-items:center; gap:10px; opacity:.95; text-decoration:none;}
+    .brand img{width:36px; height:36px;}
+    .brand span{font-family:var(--f-display); font-style:italic; font-size:16px; color:var(--cream); line-height:1;}
+    .brand small{display:block; font-family:var(--f-body); font-style:normal; font-size:8px; letter-spacing:.28em; text-transform:uppercase; color:var(--gold-2); margin-bottom:2px;}
+    .back{color:rgba(250,243,235,.75); text-decoration:none; font-size:13px; letter-spacing:.02em; border:1px solid rgba(230,193,74,.3); padding:8px 16px; border-radius:999px; transition:border-color .2s var(--ease), color .2s var(--ease);}
+    .back:hover{border-color:var(--gold); color:var(--gold-2);}
+
+    .wrap{position:relative; z-index:2; max-width:1120px; margin:0 auto; min-height:60vh; display:grid; place-items:center;}
+
+    .card{
+      width:100%; max-width:520px;
+      background:linear-gradient(160deg, rgba(9,46,35,.86), rgba(6,44,36,.92));
+      border:1px solid rgba(230,193,74,.32);
+      border-radius:26px; padding:48px 40px;
+      text-align:center;
+      box-shadow:0 40px 90px rgba(0,0,0,.5), inset 0 1px 0 rgba(250,243,235,.06);
+      -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
+      animation:rise .7s var(--ease) both;
+    }
+    @keyframes rise{from{opacity:0; transform:translateY(18px) scale(.98);} to{opacity:1; transform:none;}}
+    .icon{
+      width:68px; height:68px; margin:0 auto 20px; border-radius:50%;
+      display:grid; place-items:center;
+      background:radial-gradient(circle at 50% 40%, rgba(230,193,74,.25), rgba(230,193,74,.08));
+      border:1px solid rgba(230,193,74,.5);
+    }
+    h1{font-family:var(--f-display); font-weight:600; font-style:italic; font-size:clamp(30px,5.4vw,42px); line-height:1.05; margin:0 0 12px; color:var(--cream);}
+    h1 em{color:var(--gold); font-style:italic;}
+    .sub{font-size:14.5px; line-height:1.65; color:rgba(250,243,235,.78); max-width:420px; margin:0 auto 26px;}
+
+    .field{text-align:left; margin-bottom:14px;}
+    .field label{display:block; font-size:11.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--gold-2); margin-bottom:7px;}
+    .field input, .field select{
+      width:100%; padding:13px 14px; border-radius:11px; border:1.4px solid rgba(230,193,74,.28);
+      background:rgba(250,243,235,.06); color:var(--cream); font-family:var(--f-body); font-size:14.5px;
+    }
+    .field input::placeholder{color:rgba(250,243,235,.4);}
+    .field input:focus, .field select:focus{outline:none; border-color:var(--gold);}
+    .field input.is-invalid, .field select.is-invalid{border-color:#ff8a8a;}
+    .phone-row{display:flex; gap:8px;}
+    .phone-row select{flex:0 0 118px;}
+    .phone-row input{flex:1;}
+
+    .btn{
+      display:inline-flex; width:100%; align-items:center; justify-content:center; gap:10px;
+      padding:16px 24px; border-radius:999px; font-weight:600;
+      font-size:13px; letter-spacing:.08em; text-transform:uppercase;
+      border:1.6px solid transparent; cursor:pointer; text-decoration:none;
+      transition:transform .2s var(--ease), box-shadow .25s var(--ease), background .25s var(--ease);
+      margin-top:6px;
+    }
+    .btn:hover{transform:translateY(-2px);}
+    .btn--gold{background:linear-gradient(135deg,var(--gold),var(--gold-2)); color:#2a2206; box-shadow:0 10px 26px rgba(230,193,74,.3);}
+    .btn--wa{background:var(--wa); color:#03251a; box-shadow:0 10px 26px rgba(37,211,102,.32);}
+    .btn--wa:hover{background:var(--wa-2);}
+    .btn--outline{background:transparent; color:var(--cream); border-color:rgba(230,193,74,.55);}
+    .btn--outline:hover{background:rgba(230,193,74,.12); border-color:var(--gold);}
+    .note{margin-top:18px; font-size:11.5px; color:rgba(250,243,235,.5);}
+
+    #content{width:100%; max-width:1120px; animation:rise .6s var(--ease) both;}
+    .content-head{text-align:center; margin-bottom:26px;}
+    .content-head h1{margin-bottom:8px;}
+    .grid{display:grid; grid-template-columns:repeat(3,1fr); gap:14px;}
+    .tile{position:relative; border-radius:14px; overflow:hidden; border:1px solid rgba(230,193,74,.22); background:#04221b; aspect-ratio:4/3; cursor:pointer;}
+    .tile img, .tile video{width:100%; height:100%; object-fit:cover; display:block;}
+    .tile--wide{grid-column:span 2;}
+    .tile__label{position:absolute; left:10px; bottom:10px; font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--cream); background:rgba(6,44,36,.72); padding:5px 10px; border-radius:999px; pointer-events:none;}
+    .tile[data-img]:hover img{transform:scale(1.04);}
+    .tile img{transition:transform .35s var(--ease);}
+
+    .bottom-ctas{display:flex; gap:12px; margin-top:28px; flex-wrap:wrap; justify-content:center;}
+    .bottom-ctas .btn{width:auto; flex:1; min-width:220px;}
+
+    .lightbox{position:fixed; inset:0; z-index:50; background:rgba(3,15,12,.92); display:none; align-items:center; justify-content:center; padding:24px;}
+    .lightbox.is-open{display:flex;}
+    .lightbox img{max-width:min(92vw,1100px); max-height:88vh; border-radius:10px; box-shadow:0 30px 70px rgba(0,0,0,.6);}
+    .lightbox__close{position:absolute; top:20px; right:24px; width:42px; height:42px; border-radius:50%; background:rgba(250,243,235,.1); border:1px solid rgba(230,193,74,.4); color:var(--cream); font-size:20px; cursor:pointer; display:grid; place-items:center;}
+
+    @media (max-width:760px){
+      body{padding:16px;}
+      .card, .content-card{padding:30px 22px;}
+      .grid{grid-template-columns:repeat(2,1fr);}
+      .tile--wide{grid-column:span 2;}
+    }
+  </style>
+</head>
+<body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N7LTN3LF" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+  <div class="glow-fallback" aria-hidden="true"></div>
+  <canvas id="aurora" aria-hidden="true"></canvas>
+
+  <div class="topbar">
+    <a class="brand" href="index.html" aria-label="Happy Homes home">
+      <img src="assets/logo-mark.svg" alt="" />
+      <span><small>Code Name</small>Happy Homes</span>
+    </a>
+    <a class="back" href="index.html">&larr; Back to site</a>
+  </div>
+
+  <div class="wrap">
+    <main class="card" id="gate" role="main">
+      <div class="icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#f2d36a" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5L5 21"/></svg>
+      </div>
+      <h1>The <em>Gallery</em>.</h1>
+      <p class="sub">Share your name and number once. Photos and walkthrough videos of Happy Homes unlock instantly, and our team follows up on WhatsApp.</p>
+
+      <form id="gateForm" novalidate>
+        <div class="field">
+          <label for="g-name">Full Name</label>
+          <input id="g-name" name="name" type="text" required autocomplete="name" placeholder="Your name" />
+        </div>
+        <div class="field">
+          <label for="g-phone">Phone Number</label>
+          <div class="phone-row">
+            <select id="g-cc" name="cc" aria-label="Country code"><option value="+91" selected>&#127470;&#127475; India +91</option><option value="+977">&#127475;&#127477; Nepal +977</option><option value="+971">&#127462;&#127466; UAE +971</option><option value="+1">&#127482;&#127480; USA / Canada +1</option><option value="+44">&#127468;&#127463; UK +44</option><option value="+61">&#127462;&#127482; Australia +61</option></select>
+            <input id="g-phone" name="phone" type="tel" required inputmode="numeric" autocomplete="tel" pattern="[0-9]{6,15}" placeholder="Number only" />
+          </div>
+        </div>
+        <button class="btn btn--gold" type="submit"><span>Unlock the Gallery</span></button>
+      </form>
+      <p class="note">By submitting, you consent to be contacted on this phone via call or WhatsApp.</p>
+    </main>
+
+    <div id="content" hidden>
+      <div class="content-head">
+        <h1>The <em>Gallery</em>.</h1>
+        <p class="sub">Elevation, drone views, master plan and unit walkthroughs &mdash; tap any photo to zoom.</p>
+      </div>
+      <div class="grid">
+        <div class="tile tile--wide" data-img="assets/hero-poster.jpg"><img src="assets/hero-poster.jpg" alt="Happy Homes elevation" loading="lazy" /><span class="tile__label">Elevation</span></div>
+        <div class="tile"><video src="assets/cgi-elevation.mp4" poster="assets/hero-poster.jpg" controls playsinline preload="metadata"></video><span class="tile__label">CGI Elevation</span></div>
+        <div class="tile"><video src="assets/drone-trisulia.mp4" poster="assets/drone-poster.jpg" controls playsinline preload="metadata"></video><span class="tile__label">Drone &middot; Trisulia</span></div>
+        <div class="tile tile--wide" data-img="assets/master-plan.jpg"><img src="assets/master-plan.jpg" alt="Master plan" loading="lazy" /><span class="tile__label">Master Plan</span></div>
+        <div class="tile" data-img="assets/floor-2bhk-1.jpg"><img src="assets/floor-2bhk-1.jpg" alt="2 BHK Type 1 floor plan" loading="lazy" /><span class="tile__label">2 BHK &middot; Type 1</span></div>
+        <div class="tile" data-img="assets/floor-2bhk-2.jpg"><img src="assets/floor-2bhk-2.jpg" alt="2 BHK Type 2 floor plan" loading="lazy" /><span class="tile__label">2 BHK &middot; Type 2</span></div>
+        <div class="tile" data-img="assets/floor-3bhk-1.jpg"><img src="assets/floor-3bhk-1.jpg" alt="3 BHK Type 1 floor plan" loading="lazy" /><span class="tile__label">3 BHK &middot; Type 1</span></div>
+        <div class="tile" data-img="assets/floor-3bhk-2.jpg"><img src="assets/floor-3bhk-2.jpg" alt="3 BHK Type 2 floor plan" loading="lazy" /><span class="tile__label">3 BHK &middot; Type 2</span></div>
+        <div class="tile"><video src="assets/walkthrough-2bhk.mp4" poster="assets/hero-poster.jpg" controls playsinline preload="metadata"></video><span class="tile__label">Walkthrough &middot; 2 BHK</span></div>
+        <div class="tile"><video src="assets/walkthrough-3bhk.mp4" poster="assets/hero-poster.jpg" controls playsinline preload="metadata"></video><span class="tile__label">Walkthrough &middot; 3 BHK</span></div>
+        <div class="tile tile--wide" data-img="assets/og.jpg"><img src="assets/og.jpg" alt="Happy Homes" loading="lazy" /><span class="tile__label">Happy Homes</span></div>
+      </div>
+      <div class="bottom-ctas">
+        <a class="btn btn--outline" href="brochure.html"><span>Get the Brochure</span></a>
+        <a class="btn btn--outline" href="layout.html"><span>View Floor Plans</span></a>
+        <a class="btn btn--wa" id="waBtn" href="https://wa.me/919777999724" target="_blank" rel="noopener"><span>Chat on WhatsApp</span></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox__close" id="lightboxClose" aria-label="Close">&times;</button>
+    <img id="lightboxImg" src="" alt="" />
+  </div>
+
+  <script>
+  (function(){
+    'use strict';
+    var CONFIG = {
+      WHATSAPP_NUMBER: '919777999724',
+      SHEETS_ENDPOINT: 'https://script.google.com/macros/s/AKfycbyHf5OpyPxUnJ9FQS5tqeN3_h4BZ-2K8WPAJR5yDtC1jZD0TLCPIv8E-4mBzhWDV2_u/exec'
+    };
+    var ZOHO_WEBFORM = {
+      ENDPOINT: 'https://crm.zoho.in/crm/WebToLeadForm',
+      xnQsjsdp: '1b62886e90b98a8333a79b7d4a6783b92d4ee2686a96349b75f8d77f3b3d3eed',
+      xmIwtLD: '4180cfcd993ae458e5a0059f5eed3d42dea59da7ceba1cfd7cc998133e98e03cfbbf1ae3c2ad229987d64070ada354a7',
+      actionType: 'TGVhZHM=',
+      returnURL: 'https://codenamehappyhomes.net/thank-you.html'
+    };
+    var PAGE_SOURCE = 'Gallery page';
+    var PAGE_LABEL = 'gallery';
+
+    function detectLeadSource(){
+      try {
+        var cached = sessionStorage.getItem('chh_lead_source');
+        if (cached) return cached;
+        var params = new URLSearchParams(location.search);
+        var gclid = params.get('gclid') || '';
+        var fbclid = params.get('fbclid') || '';
+        var utmSource = (params.get('utm_source') || '').toLowerCase();
+        var src = 'Website Lead';
+        if (gclid || utmSource.indexOf('google') > -1) src = 'Google Ads';
+        else if (fbclid || /facebook|meta|instagram|^ig$/.test(utmSource)) src = 'Meta Ads';
+        else if (utmSource.indexOf('whatsapp') > -1) src = 'WhatsApp';
+        sessionStorage.setItem('chh_lead_source', src);
+        sessionStorage.setItem('chh_gclid', gclid);
+        return src;
+      } catch(_) { return 'Website Lead'; }
+    }
+    detectLeadSource();
+
+    function encodeForNetlify(data){
+      return Object.keys(data).filter(function(k){return data[k]!==undefined && data[k]!==null && data[k]!=='';})
+        .map(function(k){return encodeURIComponent(k)+'='+encodeURIComponent(data[k]);}).join('&');
+    }
+    async function submitLead(payload){
+      try {
+        var body = encodeForNetlify(Object.assign({ 'form-name': 'gallery-lead' }, payload));
+        await fetch('/', { method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body: body });
+      } catch(err){ console.warn('Netlify Forms POST failed:', err); }
+      try {
+        if (CONFIG.SHEETS_ENDPOINT && CONFIG.SHEETS_ENDPOINT.indexOf('http') === 0) {
+          await fetch(CONFIG.SHEETS_ENDPOINT, { method:'POST', mode:'no-cors', headers:{'Content-Type':'text/plain;charset=utf-8'}, body: JSON.stringify(Object.assign({'form-name':'gallery-lead'}, payload)) });
+        }
+      } catch(err){ console.warn('Sheet POST failed:', err); }
+    }
+    async function submitToZoho(payload){
+      try {
+        var leadSource = detectLeadSource();
+        var gclid = ''; try { gclid = sessionStorage.getItem('chh_gclid') || ''; } catch(_){}
+        var body = new URLSearchParams();
+        body.append('xnQsjsdp', ZOHO_WEBFORM.xnQsjsdp);
+        body.append('zc_gad', gclid);
+        body.append('xmIwtLD', ZOHO_WEBFORM.xmIwtLD);
+        body.append('actionType', ZOHO_WEBFORM.actionType);
+        body.append('returnURL', ZOHO_WEBFORM.returnURL);
+        body.append('Last Name', payload.name || 'Website Visitor');
+        body.append('Phone', payload.phone || '');
+        body.append('Lead Source', leadSource);
+        body.append('LEADCF2', 'Apartment');
+        body.append('Description', 'Form: ' + PAGE_SOURCE + '\nPage: ' + location.href);
+        await fetch(ZOHO_WEBFORM.ENDPOINT, { method:'POST', mode:'no-cors', body: body, keepalive:true });
+      } catch(err){ console.warn('Zoho CRM POST failed:', err); }
+    }
+    function buildWA(payload){
+      var lines = ['Hi, I am interested in Happy Homes, Trisulia.', ''];
+      if (payload.name) lines.push('*Name:* ' + payload.name);
+      if (payload.phone) lines.push('*Phone:* ' + payload.phone);
+      lines.push(''); lines.push('I just viewed the ' + PAGE_LABEL + '. Please share more details.');
+      return 'https://wa.me/' + CONFIG.WHATSAPP_NUMBER + '?text=' + encodeURIComponent(lines.join('\n'));
+    }
+
+    function bindLightbox(){
+      var lb = document.getElementById('lightbox');
+      var lbImg = document.getElementById('lightboxImg');
+      var lbClose = document.getElementById('lightboxClose');
+      document.querySelectorAll('.tile[data-img]').forEach(function(t){
+        t.addEventListener('click', function(){
+          lbImg.src = t.getAttribute('data-img');
+          lbImg.alt = t.querySelector('img') ? t.querySelector('img').alt : '';
+          lb.classList.add('is-open');
+        });
+      });
+      function close(){ lb.classList.remove('is-open'); lbImg.src=''; }
+      if (lbClose) lbClose.addEventListener('click', close);
+      lb.addEventListener('click', function(e){ if (e.target === lb) close(); });
+      document.addEventListener('keydown', function(e){ if (e.key === 'Escape') close(); });
+    }
+
+    function onReveal(){ bindLightbox(); }
+
+    function reveal(){
+      var gate = document.getElementById('gate');
+      var content = document.getElementById('content');
+      if (gate) gate.hidden = true;
+      if (content) content.hidden = false;
+      var waBtn = document.getElementById('waBtn');
+      if (waBtn) { try { waBtn.href = buildWA(JSON.parse(sessionStorage.getItem('chh_lead')||'{}')); } catch(_){} }
+      onReveal();
+    }
+
+    try {
+      if (localStorage.getItem('chh_plans_unlocked') === '1') reveal();
+    } catch(_) {}
+
+    var form = document.getElementById('gateForm');
+    if (form) {
+      form.addEventListener('submit', async function(e){
+        e.preventDefault();
+        var fd = new FormData(form);
+        var cc = (fd.get('cc')||'').toString().trim();
+        var digits = (fd.get('phone')||'').toString().replace(/\D/g,'');
+        var payload = {
+          name: (fd.get('name')||'').toString().trim(),
+          phone: digits ? ((cc?'('+cc+') ':'')+digits) : '',
+          source: PAGE_SOURCE,
+          page: location.href
+        };
+        var nameEl = form.querySelector('[name="name"]');
+        var phoneEl = form.querySelector('[name="phone"]');
+        var ok = true;
+        if (!payload.name) { nameEl.classList.add('is-invalid'); ok=false; } else nameEl.classList.remove('is-invalid');
+        if (!payload.phone) { phoneEl.classList.add('is-invalid'); if(ok) phoneEl.focus(); ok=false; } else phoneEl.classList.remove('is-invalid');
+        if (!ok) return;
+        var sb = form.querySelector('button[type="submit"]');
+        if (sb) { sb.disabled = true; var sp = sb.querySelector('span'); if (sp) sp.textContent='Please wait...'; }
+        await submitLead(payload);
+        submitToZoho(payload);
+        try { sessionStorage.setItem('chh_lead', JSON.stringify({ name: payload.name, phone: payload.phone })); } catch(_){}
+        try { localStorage.setItem('chh_plans_unlocked', '1'); } catch(_){}
+        try {
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push({ event:'lead_submit', form_source: PAGE_SOURCE });
+          if (typeof window.gtag === 'function') window.gtag('event','lead_submit',{form_source: PAGE_SOURCE});
+        } catch(_){}
+        reveal();
+      });
+    }
+
+    (function(){
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var canvas = document.getElementById('aurora');
+      var gl = null;
+      try { gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl'); } catch(e){}
+      if (!gl) { canvas.style.display = 'none'; return; }
+      var vs = 'attribute vec2 p; void main(){ gl_Position = vec4(p,0.0,1.0); }';
+      var fs = [
+        'precision highp float;',
+        'uniform vec2 u_res; uniform float u_time;',
+        'float hash(vec2 p){ return fract(sin(dot(p, vec2(127.1,311.7)))*43758.5453); }',
+        'float noise(vec2 p){ vec2 i=floor(p); vec2 f=fract(p); vec2 u=f*f*(3.0-2.0*f);',
+        '  return mix(mix(hash(i),hash(i+vec2(1.0,0.0)),u.x), mix(hash(i+vec2(0.0,1.0)),hash(i+vec2(1.0,1.0)),u.x), u.y); }',
+        'float fbm(vec2 p){ float v=0.0; float a=0.5; for(int i=0;i<6;i++){ v+=a*noise(p); p=p*2.02+vec2(1.7,9.2); a*=0.5; } return v; }',
+        'void main(){',
+        '  vec2 uv = gl_FragCoord.xy / u_res.xy;',
+        '  vec2 q = uv; q.x *= u_res.x/u_res.y;',
+        '  float t = u_time*0.06;',
+        '  float f = fbm(q*1.9 + vec2(t*0.6, -t*0.35));',
+        '  float g = fbm(q*2.8 + f*1.4 - vec2(t*0.5, t*0.75));',
+        '  vec3 deep = vec3(0.018,0.098,0.078);',
+        '  vec3 green = vec3(0.05,0.29,0.227);',
+        '  vec3 gold = vec3(0.955,0.805,0.34);',
+        '  vec3 col = mix(deep, green, smoothstep(0.18,0.95,f));',
+        '  float ribbon = smoothstep(0.5,0.96,g) * (0.55 + 0.45*sin(u_time*0.38 + uv.y*6.0 + f*4.0));',
+        '  col += gold * ribbon * 0.55;',
+        '  float d = length(uv - vec2(0.5,0.42));',
+        '  col += gold * smoothstep(0.8,0.0,d) * 0.16;',
+        '  float spk = pow(noise(uv*u_res.xy*0.35 + u_time*2.0), 22.0);',
+        '  col += gold * spk * 0.4;',
+        '  col *= 0.5 + 0.62*smoothstep(1.2,0.12,d);',
+        '  gl_FragColor = vec4(col,1.0);',
+        '}'
+      ].join('\n');
+      function sh(type, src){ var s=gl.createShader(type); gl.shaderSource(s,src); gl.compileShader(s); return s; }
+      var prog = gl.createProgram();
+      gl.attachShader(prog, sh(gl.VERTEX_SHADER, vs));
+      gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, fs));
+      gl.linkProgram(prog);
+      if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) { canvas.style.display='none'; return; }
+      gl.useProgram(prog);
+      var buf = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 3,-1, -1,3]), gl.STATIC_DRAW);
+      var loc = gl.getAttribLocation(prog, 'p');
+      gl.enableVertexAttribArray(loc);
+      gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+      var uRes = gl.getUniformLocation(prog, 'u_res');
+      var uTime = gl.getUniformLocation(prog, 'u_time');
+      function resize(){
+        var dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+        canvas.width = Math.floor(innerWidth * dpr);
+        canvas.height = Math.floor(innerHeight * dpr);
+        gl.viewport(0,0,canvas.width,canvas.height);
+      }
+      window.addEventListener('resize', resize); resize();
+      var start = performance.now();
+      function frame(now){
+        var t = (now - start)/1000;
+        gl.uniform2f(uRes, canvas.width, canvas.height);
+        gl.uniform1f(uTime, t);
+        gl.drawArrays(gl.TRIANGLES, 0, 3);
+        if (!reduce) requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
+    })();
+  })();
+  </script>
+</body>
+</html>
