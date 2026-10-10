@@ -149,9 +149,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </a>
     <nav class="nav__menu" id="navMenu" aria-label="Primary">
       <a href="#top">Home</a>
-      <a href="brochure.html">Brochure</a>
-      <a href="gallery.html">Gallery</a>
-      <a href="layout.html">Floor Plan</a>
+      <a href="#brochure">Brochure</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#plans">Floor Plan</a>
       <a href="#pricing">Price</a>
       <a href="#location">Location</a>
       <a href="#emi">EMI Calculator</a>
@@ -346,7 +346,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <span class="eyebrow">Brochure</span>
             <h2>The full <em>floor plans, master plan, pricing &amp; payment options</em>.</h2>
             <p>Share your details once. The brochure downloads instantly and our team gets in touch on WhatsApp with current availability and floor-wise pricing.</p>
-            <a class="btn btn--pink btn--pulse" href="brochure.html"><span>Get the Brochure</span></a>
+            <button class="btn btn--pink btn--pulse" data-open-modal><span>Get the Brochure</span></button>
           </div>
           <div class="brochure-card__art" aria-hidden="true">
             <svg viewBox="0 0 200 240" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round">
@@ -453,7 +453,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             </div>
 
             <div class="plans__cta">
-              <a href="brochure.html" class="btn btn--outline btn--block"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4v12m0 0l-5-5m5 5l5-5M5 20h14"/></svg><span>Floor Plan + Brochure</span></a>
+              <a href="assets/brochure.pdf" class="btn btn--outline btn--block" data-download-on-lead><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4v12m0 0l-5-5m5 5l5-5M5 20h14"/></svg><span>Floor Plan + Brochure</span></a>
               <a href="#location" class="btn btn--outline btn--block"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5,3 19,12 5,21"/></svg><span>Location Video</span></a>
               <button class="btn btn--pink btn--block btn--pulse" data-open-modal>Enquire / Book Visit</button>
             </div>
@@ -462,6 +462,31 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
     </section>
 <!-- PRICING BAND -->
+    <!-- GALLERY -->
+    <section class="gallery" id="gallery">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Gallery</span>
+          <h2>A closer <em>look</em>.</h2>
+        </div>
+        <div class="carousel">
+          <div class="carousel__track" id="gallery-track">
+            <figure class="carousel__slide"><img src="assets/hero-poster.jpg" alt="Happy Homes elevation" loading="lazy" /><figcaption><b>Elevation</b><span>CGI render</span></figcaption></figure>
+            <figure class="carousel__slide"><img src="assets/drone-poster.jpg" alt="Drone view of Trisulia" loading="lazy" /><figcaption><b>Drone View</b><span>Trisulia, Cuttack</span></figcaption></figure>
+            <figure class="carousel__slide"><img src="assets/master-plan.jpg" alt="Master plan" loading="lazy" /><figcaption><b>Master Plan</b><span>2.80 acres</span></figcaption></figure>
+            <figure class="carousel__slide"><img src="assets/floor-2bhk-1.jpg" alt="2 BHK Type 1 floor plan" loading="lazy" /><figcaption><b>2 BHK</b><span>Type 1</span></figcaption></figure>
+            <figure class="carousel__slide"><img src="assets/floor-2bhk-2.jpg" alt="2 BHK Type 2 floor plan" loading="lazy" /><figcaption><b>2 BHK</b><span>Type 2</span></figcaption></figure>
+            <figure class="carousel__slide"><img src="assets/floor-3bhk-1.jpg" alt="3 BHK Type 1 floor plan" loading="lazy" /><figcaption><b>3 BHK</b><span>Type 1</span></figcaption></figure>
+            <figure class="carousel__slide"><img src="assets/floor-3bhk-2.jpg" alt="3 BHK Type 2 floor plan" loading="lazy" /><figcaption><b>3 BHK</b><span>Type 2</span></figcaption></figure>
+            <figure class="carousel__slide"><img src="assets/og.jpg" alt="Happy Homes" loading="lazy" /><figcaption><b>Happy Homes</b><span>Trisulia, Cuttack</span></figcaption></figure>
+          </div>
+          <button class="carousel__nav carousel__nav--prev" data-carousel-prev aria-label="Previous">&#8249;</button>
+          <button class="carousel__nav carousel__nav--next" data-carousel-next aria-label="Next">&#8250;</button>
+          <div class="carousel__dots" id="gallery-dots"></div>
+        </div>
+      </div>
+    </section>
+
     <section class="pricing" id="pricing">
       <canvas class="pricing__aurora" id="pricingAurora" aria-hidden="true"></canvas>
       <div class="container">
@@ -1084,7 +1109,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <!-- MOBILE BOTTOM BAR (sticky footer with quick actions) -->
   <nav class="mobilebar" aria-label="Quick actions">
-    <a class="mobilebar__btn" href="brochure.html" aria-label="Open brochure">
+    <a class="mobilebar__btn" href="assets/brochure.pdf" download="Happy-Homes-Brochure.pdf" aria-label="Download brochure">
       <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 4v12m0 0l-5-5m5 5l5-5M5 20h14"/></svg><span>Brochure</span>
     </a>
     <a class="mobilebar__btn" href="tel:+919777999724" aria-label="Call">
