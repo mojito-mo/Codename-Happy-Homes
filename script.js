@@ -119,6 +119,7 @@
     if (!target) return;
     e.preventDefault();
     window.scrollTo({ top: target.getBoundingClientRect().top + scrollY - 64, behavior: prm ? 'auto' : 'smooth' });
+    try { history.pushState(null, '', id); } catch (_) {}
   });
 
   /* ========== MODALS (3 of them) ========== */
