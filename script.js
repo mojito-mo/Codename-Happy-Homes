@@ -255,7 +255,8 @@
       await fetch(ZOHO_WEBFORM.ENDPOINT, {
         method: 'POST', mode: 'no-cors', body: body, keepalive: true
       });
-    } catch (err) { console.warn('Zoho CRM POST failed:', err); }
+      return true;
+    } catch (err) { console.warn('Zoho CRM POST failed:', err); return false; }
   }
 
   function buildWA(payload, hint) {
@@ -345,9 +346,19 @@
       if (sb) { sb.disabled = true; const sp = sb.querySelector('span'); if (sp) sp.textContent = 'Sending...'; }
       const netlifyName = f.getAttribute('name') || '';
 
-      // 1) Keep the existing capture: Netlify Forms + Google Sheet + Ads
+      // 1) Push to Zoho CRM and actually wait for it (capped at 4s) instead of
+      //    firing it and navigating away immediately — that race is why some
+      //    leads were reaching Netlify/Sheets but never reaching Zoho.
+      const zohoResult = await Promise.race([
+        submitToZoho(p),
+        new Promise((resolve) => setTimeout(() => resolve('timeout'), 4000))
+      ]);
+      p.zohoSync = zohoResult === true ? 'ok' : (zohoResult === 'timeout' ? 'timeout' : 'failed');
+
+      // 2) Netlify Forms + Google Sheet + Ads (unchanged, still the backup capture —
+      //    now also carries zohoSync so a failed/timed-out CRM push is visible
+      //    in the sheet instead of disappearing silently).
       await submitLead(p, netlifyName);
-      submitToZoho(p);
 
       // 2) Build the WhatsApp hand-off link for the thank-you page
       const hint = source === 'Site Visit form' ? 'Please confirm my free site visit pickup.' :
