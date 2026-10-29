@@ -317,6 +317,18 @@
      there so the redirect never interrupts the file download.                 */
   const THANK_YOU_URL = 'thank-you.html';
 
+  // Zoho CRM only routes leads to agents when the number is in a format it
+  // accepts: +918093008662 / 918093008662 / 8093008662 are fine, but the old
+  // "(+91) 8093008662" style is not. Always send +<country code><number>,
+  // and drop a leading 0 or a country code the visitor typed in by hand.
+  function normalizePhone(cc, digits) {
+    if (!digits) return '';
+    const ccDigits = (cc || '+91').replace(/\D/g, '') || '91';
+    let d = digits.replace(/^0+/, '');
+    if (d.length > 10 && d.indexOf(ccDigits) === 0) d = d.slice(ccDigits.length);
+    return '+' + ccDigits + d;
+  }
+
   function bindForm(formId, source, opts) {
     opts = opts || {};
     const f = $('#' + formId);
@@ -328,7 +340,7 @@
       const digits = (fd.get('phone') || '').toString().replace(/\D/g, '');
       const p = {
         name: (fd.get('name') || '').toString().trim(),
-        phone: digits ? ((cc ? '(' + cc + ') ' : '') + digits) : '',
+        phone: normalizePhone(cc, digits),
         email: (fd.get('email') || '').toString().trim(),
         budget: (fd.get('budget') || '').toString().trim(),
         timeline: (fd.get('timeline') || '').toString().trim(),
