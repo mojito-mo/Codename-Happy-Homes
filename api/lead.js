@@ -6,6 +6,26 @@
 // lead is lost either way.
 
 const ZOHO_URL = 'https://www.zohoapis.in/crm/v7/functions/create_lead/actions/execute';
+const ZOHO_LEADS_URL = 'https://www.zohoapis.in/crm/v7/Leads';
+const ZOHO_TOKEN_URL = 'https://accounts.zoho.in/oauth/v2/token';
+
+// Auth: either ZOHO_ZAPIKEY, or OAuth via a Self Client
+// (ZOHO_CLIENT_ID + ZOHO_CLIENT_SECRET + ZOHO_REFRESH_TOKEN).
+let cachedToken = null; // { token, exp }
+async function getAccessToken() {
+  if (cachedToken && Date.now() < cachedToken.exp) return cachedToken.token;
+  const body = new URLSearchParams({
+    refresh_token: process.env.ZOHO_REFRESH_TOKEN,
+    client_id: process.env.ZOHO_CLIENT_ID,
+    client_secret: process.env.ZOHO_CLIENT_SECRET,
+    grant_type: 'refresh_token'
+  });
+  const r = await fetch(ZOHO_TOKEN_URL, { method: 'POST', body: body });
+  const d = await r.json().catch(() => ({}));
+  if (!d.access_token) throw new Error('token refresh failed: ' + (d.error || r.status));
+  cachedToken = { token: d.access_token, exp: Date.now() + ((d.expires_in || 3600) - 300) * 1000 };
+  return cachedToken.token;
+}
 const PROJECT = 'Code Name Happy Homes';
 const ALLOWED_HOSTS = /^(www\.)?codenamehappyhomes\.net$|\.vercel\.app$|^localhost$/;
 
@@ -47,7 +67,8 @@ module.exports = async (req, res) => {
   }
 
   const key = process.env.ZOHO_ZAPIKEY;
-  if (!key) { res.statusCode = 503; return res.end(JSON.stringify({ ok: false, error: 'not_configured' })); }
+  const hasOAuth = !!(process.env.ZOHO_CLIENT_ID && process.env.ZOHO_CLIENT_SECRET && process.env.ZOHO_REFRESH_TOKEN);
+  if (!key && !hasOAuth) { res.statusCode = 503; return res.end(JSON.stringify({ ok: false, error: 'not_configured' })); }
 
   const p = await readBody(req);
   if (str(p['bot-field'])) { res.statusCode = 200; return res.end(JSON.stringify({ ok: true })); } // honeypot
@@ -88,20 +109,43 @@ module.exports = async (req, res) => {
   if (UNIT_TYPES.indexOf(unit) > -1) lead.Preferred_Unit_Types = [unit];
 
   try {
-    const r = await fetch(ZOHO_URL + '?auth_type=apikey&zapikey=' + encodeURIComponent(key), {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(lead)
-    });
+    let ok = false, leadId, info = '';
+
+    // a) The CRM team's create_lead function (preferred: it runs their routing)
+    let url = ZOHO_URL;
+    const headers = { 'Content-Type': 'application/json' };
+    if (key) url += '?auth_type=apikey&zapikey=' + encodeURIComponent(key);
+    else { url += '?auth_type=oauth'; headers.Authorization = 'Zoho-oauthtoken ' + await getAccessToken(); }
+    const r = await fetch(url, { method: 'POST', headers: headers, body: JSON.stringify(lead) });
     const text = await r.text();
     let data = {};
     try { data = JSON.parse(text); } catch (_) {}
-    const ok = r.ok && data.code === 'success';
-    if (!ok) console.error('Zoho create_lead rejected', r.status, text.slice(0, 500));
+    ok = r.ok && data.code === 'success';
+    if (ok) leadId = data.details && data.details.lead_id;
+    else info = 'create_lead ' + r.status + ' ' + text.slice(0, 300);
+
+    // b) OAuth only: if the function call is refused, create the lead directly
+    //    in the Leads module with the same fields (workflows still run).
+    if (!ok && hasOAuth) {
+      const r2 = await fetch(ZOHO_LEADS_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: 'Zoho-oauthtoken ' + await getAccessToken() },
+        body: JSON.stringify({ data: [lead], trigger: ['workflow', 'approval', 'blueprint'] })
+      });
+      const t2 = await r2.text();
+      let d2 = {};
+      try { d2 = JSON.parse(t2); } catch (_) {}
+      const row = d2.data && d2.data[0];
+      ok = !!(row && row.code === 'SUCCESS');
+      if (ok) leadId = row.details && row.details.id;
+      else info += ' | Leads API ' + r2.status + ' ' + t2.slice(0, 300);
+    }
+
+    if (!ok) console.error('Zoho lead push rejected:', info);
     res.statusCode = ok ? 200 : 502;
-    return res.end(JSON.stringify({ ok: ok, lead_id: ok && data.details ? data.details.lead_id : undefined }));
+    return res.end(JSON.stringify({ ok: ok, lead_id: leadId }));
   } catch (err) {
-    console.error('Zoho create_lead failed', err && err.message);
+    console.error('Zoho lead push failed', err && err.message);
     res.statusCode = 502;
     return res.end(JSON.stringify({ ok: false, error: 'upstream' }));
   }
