@@ -127,18 +127,23 @@ module.exports = async (req, res) => {
     // b) OAuth only: if the function call is refused, create the lead directly
     //    in the Leads module with the same fields (workflows still run).
     if (!ok && hasOAuth) {
-      const r2 = await fetch(ZOHO_LEADS_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Authorization: 'Zoho-oauthtoken ' + await getAccessToken() },
-        body: JSON.stringify({ data: [lead], trigger: ['workflow', 'approval', 'blueprint'] })
-      });
-      const t2 = await r2.text();
-      let d2 = {};
-      try { d2 = JSON.parse(t2); } catch (_) {}
-      const row = d2.data && d2.data[0];
-      ok = !!(row && row.code === 'SUCCESS');
-      if (ok) leadId = row.details && row.details.id;
-      else info += ' | Leads API ' + r2.status + ' ' + t2.slice(0, 300);
+      // Try with the "Happy Homes" tag first; if Zoho objects to the tag,
+      // retry once without it so the lead itself is never lost.
+      const attempts = [lead, Object.assign({}, lead, { Tag: undefined })];
+      for (let i = 0; i < attempts.length && !ok; i++) {
+        const r2 = await fetch(ZOHO_LEADS_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Authorization: 'Zoho-oauthtoken ' + await getAccessToken() },
+          body: JSON.stringify({ data: [attempts[i]], trigger: ['workflow', 'approval', 'blueprint'] })
+        });
+        const t2 = await r2.text();
+        let d2 = {};
+        try { d2 = JSON.parse(t2); } catch (_) {}
+        const row = d2.data && d2.data[0];
+        ok = !!(row && row.code === 'SUCCESS');
+        if (ok) leadId = row.details && row.details.id;
+        else info += ' | Leads API ' + r2.status + ' ' + t2.slice(0, 300);
+      }
     }
 
     if (!ok) console.error('Zoho lead push rejected:', info);
