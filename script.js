@@ -220,14 +220,37 @@
       }
     } catch (_) {}
   }
-  // Push every lead into Zoho CRM (Leads module, tagged "Happy Homes"),
-  // in parallel with the existing Netlify Forms + Google Sheet capture.
-  async function submitToZoho(payload) {
-    try {
-      const leadSource = detectLeadSource();
-      let gclid = '';
-      try { gclid = sessionStorage.getItem('chh_gclid') || ''; } catch (_) {}
+  // Zoho "Enquiry Source" values agreed with the CRM team: Google Ads and plain
+  // website leads both go in as "Google Ads - Happy Homes".
+  const ZOHO_SOURCE_MAP = {
+    'Google Ads': 'Google Ads - Happy Homes',
+    'Website Lead': 'Google Ads - Happy Homes',
+    'Meta Ads': 'Meta Ads',
+    'WhatsApp': 'WhatsApp'
+  };
 
+  // Push every lead into Zoho CRM. First try the CRM team's Lead Push API via
+  // our own /api/lead (sets Project Name = "Code Name Happy Homes" and gives a
+  // real success/fail answer). If that isn't available or fails, fall back to
+  // the old Web-to-Lead form so the lead still lands in Zoho.
+  // Returns 'api', 'webform', or false.
+  async function submitToZoho(payload) {
+    const channel = detectLeadSource();
+    let gclid = '';
+    try { gclid = sessionStorage.getItem('chh_gclid') || ''; } catch (_) {}
+
+    try {
+      const r = await fetch('/api/lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(Object.assign({}, payload, { channel: channel, gclid: gclid })),
+        keepalive: true
+      });
+      if (r.ok) return 'api';
+      console.warn('Lead API returned', r.status, '- falling back to Zoho web form');
+    } catch (err) { console.warn('Lead API failed, falling back to Zoho web form:', err); }
+
+    try {
       const descLines = [];
       if (payload.config)   descLines.push('Configuration: ' + payload.config);
       if (payload.budget)   descLines.push('Budget: ' + payload.budget);
@@ -236,6 +259,8 @@
       if (payload.date)     descLines.push('Preferred date: ' + payload.date);
       if (payload.slot)     descLines.push('Preferred slot: ' + payload.slot);
       if (payload.message)  descLines.push('Message: ' + payload.message);
+      descLines.push('Channel: ' + channel);
+      descLines.push('Project: Code Name Happy Homes');
       descLines.push('Form: ' + (payload.source || ''));
       descLines.push('Page: ' + (payload.page || ''));
 
@@ -248,14 +273,14 @@
       body.append('Last Name', payload.name || 'Website Visitor');
       body.append('Phone', payload.phone || '');
       body.append('Email', payload.email || '');
-      body.append('Lead Source', leadSource);
+      body.append('Lead Source', ZOHO_SOURCE_MAP[channel] || 'Google Ads - Happy Homes');
       body.append('LEADCF2', 'Apartment');
       body.append('Description', descLines.join('\n'));
 
       await fetch(ZOHO_WEBFORM.ENDPOINT, {
         method: 'POST', mode: 'no-cors', body: body, keepalive: true
       });
-      return true;
+      return 'webform';
     } catch (err) { console.warn('Zoho CRM POST failed:', err); return false; }
   }
 
@@ -358,14 +383,14 @@
       if (sb) { sb.disabled = true; const sp = sb.querySelector('span'); if (sp) sp.textContent = 'Sending...'; }
       const netlifyName = f.getAttribute('name') || '';
 
-      // 1) Push to Zoho CRM and actually wait for it (capped at 4s) instead of
+      // 1) Push to Zoho CRM and actually wait for it (capped at 6s) instead of
       //    firing it and navigating away immediately — that race is why some
       //    leads were reaching Netlify/Sheets but never reaching Zoho.
       const zohoResult = await Promise.race([
         submitToZoho(p),
-        new Promise((resolve) => setTimeout(() => resolve('timeout'), 4000))
+        new Promise((resolve) => setTimeout(() => resolve('timeout'), 6000))
       ]);
-      p.zohoSync = zohoResult === true ? 'ok' : (zohoResult === 'timeout' ? 'timeout' : 'failed');
+      p.zohoSync = zohoResult || 'failed';   // 'api' | 'webform' | 'timeout' | 'failed'
 
       // 2) Netlify Forms + Google Sheet + Ads (unchanged, still the backup capture —
       //    now also carries zohoSync so a failed/timed-out CRM push is visible
