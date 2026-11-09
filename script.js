@@ -221,10 +221,10 @@
     } catch (_) {}
   }
   // Zoho "Enquiry Source" values agreed with the CRM team: Google Ads and plain
-  // website leads both go in as "Google Ads - Happy Homes".
+  // website leads both go in as "Google Ads".
   const ZOHO_SOURCE_MAP = {
-    'Google Ads': 'Google Ads - Happy Homes',
-    'Website Lead': 'Google Ads - Happy Homes',
+    'Google Ads': 'Google Ads',
+    'Website Lead': 'Google Ads',
     'Meta Ads': 'Meta Ads',
     'WhatsApp': 'WhatsApp'
   };
@@ -273,7 +273,7 @@
       body.append('Last Name', payload.name || 'Website Visitor');
       body.append('Phone', payload.phone || '');
       body.append('Email', payload.email || '');
-      body.append('Lead Source', ZOHO_SOURCE_MAP[channel] || 'Google Ads - Happy Homes');
+      body.append('Lead Source', ZOHO_SOURCE_MAP[channel] || 'Google Ads');
       body.append('LEADCF2', 'Apartment');
       body.append('Description', descLines.join('\n'));
 

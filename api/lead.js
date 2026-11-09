@@ -29,12 +29,12 @@ async function getAccessToken() {
 const PROJECT = 'Code Name Happy Homes';
 const ALLOWED_HOSTS = /^(www\.)?codenamehappyhomes\.net$|\.vercel\.app$|^localhost$/;
 
-// Channel detected in the browser -> Zoho "Enquiry Source" picklist value.
-// CRM team asked for Google Ads AND plain website leads to both go in as
-// "Google Ads - Happy Homes". The raw channel is still kept in Description.
+// Channel detected in the browser -> Zoho "Enquiry Source" value.
+// CRM team (9 Nov 2026): Google Ads AND plain website leads both go in as
+// "Google Ads". The raw channel is still kept in Description.
 const SOURCE_MAP = {
-  'Google Ads': 'Google Ads - Happy Homes',
-  'Website Lead': 'Google Ads - Happy Homes',
+  'Google Ads': 'Google Ads',
+  'Website Lead': 'Google Ads',
   'Meta Ads': 'Meta Ads',
   'WhatsApp': 'WhatsApp'
 };
@@ -98,13 +98,12 @@ module.exports = async (req, res) => {
     Phone: phone,
     Email: /^[^\s@\/]+@[^\s@\/]+\.[^\s@\/]+$/.test(email) ? email : null,
     Lead_Type: 'Buyer',
-    Lead_Source: SOURCE_MAP[channel] || 'Google Ads - Happy Homes',
+    Lead_Source: SOURCE_MAP[channel] || 'Google Ads',
     Project_Name: PROJECT,
     Preferred_Projects: [PROJECT],
     Preferred_Property_Type: ['Apartment'],
     Property_Category: 'Residential',
-    Description: desc.join('\n'),
-    Tag: [{ name: 'Happy Homes' }]
+    Description: desc.join('\n')
   };
   if (UNIT_TYPES.indexOf(unit) > -1) lead.Preferred_Unit_Types = [unit];
 
@@ -127,9 +126,7 @@ module.exports = async (req, res) => {
     // b) OAuth only: if the function call is refused, create the lead directly
     //    in the Leads module with the same fields (workflows still run).
     if (!ok && hasOAuth) {
-      // Try with the "Happy Homes" tag first; if Zoho objects to the tag,
-      // retry once without it so the lead itself is never lost.
-      const attempts = [lead, Object.assign({}, lead, { Tag: undefined })];
+      const attempts = [lead];
       for (let i = 0; i < attempts.length && !ok; i++) {
         const r2 = await fetch(ZOHO_LEADS_URL, {
           method: 'POST',
